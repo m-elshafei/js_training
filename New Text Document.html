@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- You need the jQuery library-->
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<style>
+/*hide the modal container in the beginning */
+#modal {
+    display: none;
+}
+</style>
+<!-- this is where your html will populate -->
+<div id="modal"></div>
+<form action="" method="post">
+    <input type="hidden" name="action" value="leadteam" />
+    <input type="submit" name="submit" id="submit" value="Lead This Trip" />
+</form>
+<script>
+// When the page has loaded
+$(document).ready(function() {
+    /*
+      If you need to only have it happen on one or more times, but not every time,
+       you can use a selector such as id="whatever" in your form:
+       $('#whatever').submit(....etc
+       or you want perhaps some but not all forms, use class="whatever" in your form:
+       $('.whatever').submit(....etc
+    */
+    $('form').submit(function(e) {
+        // prevent the natural submission of the form
+        e.preventDefault();
+        // create an ajax instance
+        $.ajax({
+            /*
+               This is the where your edit page is located
+               If you were to use different forms, you can use the 
+               attr in jquery to grab the action="/whatever.php" in the form
+               url: $(this).attr('action'),
+               This will allow you to use this same code without copy pasting
+               but will then allow for any the forms in your site
+             */
+            url: 'https://github.com/m-elshafei',
+            // This function turns your submission to a post string
+            data: $(this).serialize(),
+            // Sends as a post
+            type: 'post',
+            // If the ajax is successful
+            success: function(response) {
+                // Fade in the modal window
+                $('#modal').fadeIn(function() {
+                    // Populate with the content on your edit page
+                    $(this).html(response);
+                });
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>
